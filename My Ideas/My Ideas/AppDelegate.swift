@@ -27,8 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // To get an API key, visit http://dev.evernote.com/documentation/cloud/
         let CONSUMER_KEY = APIKeyData[0];
         let CONSUMER_SECRET = APIKeyData[1];
-        print("CONSUMER_KEY \(CONSUMER_KEY)")
-        print("CONSUMER_SECRET \(CONSUMER_SECRET)")
         
         ENSession.setSharedSessionConsumerKey(CONSUMER_KEY, consumerSecret: CONSUMER_SECRET, optionalHost: SANDBOX_HOST)
         return true
