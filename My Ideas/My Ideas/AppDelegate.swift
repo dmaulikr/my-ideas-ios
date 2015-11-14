@@ -16,7 +16,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+
+        // Initial development is done on the sandbox service
+        // When you want to connect to production, just pass "nil" for "optionalHost"
+        let SANDBOX_HOST = ENSessionHostSandbox
+        
+        let APIKeyData = loadEvernoteAPIKey().componentsSeparatedByString("\n")
+        
+        // Fill in the consumer key and secret with the values that you received from Evernote
+        // To get an API key, visit http://dev.evernote.com/documentation/cloud/
+        let CONSUMER_KEY = APIKeyData[0];
+        let CONSUMER_SECRET = APIKeyData[1];
+        print("CONSUMER_KEY \(CONSUMER_KEY)")
+        print("CONSUMER_SECRET \(CONSUMER_SECRET)")
+        
+        ENSession.setSharedSessionConsumerKey(CONSUMER_KEY, consumerSecret: CONSUMER_SECRET, optionalHost: SANDBOX_HOST)
         return true
+    }
+    
+    func loadEvernoteAPIKey() -> String {
+        let evernoteKeyFilePath = NSBundle.mainBundle().pathForResource("evernote_key", ofType: "txt")
+        let fileData = String(contentsOfFile: evernoteKeyFilePath!, encoding: NSUTF8StringEncoding)
+        return fileData!
     }
 
     func applicationWillResignActive(application: UIApplication) {
