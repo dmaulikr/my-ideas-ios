@@ -34,7 +34,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func loadEvernoteAPIKey() -> String {
         let evernoteKeyFilePath = NSBundle.mainBundle().pathForResource("evernote_key", ofType: "txt")
-        let fileData = String(contentsOfFile: evernoteKeyFilePath!, encoding: NSUTF8StringEncoding)
+        let fileData: String?
+        do {
+            fileData = try String(contentsOfFile: evernoteKeyFilePath!, encoding: NSUTF8StringEncoding)
+        } catch _ {
+            fileData = nil
+        }
         return fileData!
     }
 

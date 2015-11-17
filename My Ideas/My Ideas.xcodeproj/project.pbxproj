@@ -18,6 +18,8 @@
 		6129DCBF1BF6E736005FA253 /* ENSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCBD1BF6E736005FA253 /* ENSDK.framework */; };
 		6129DCC11BF6E764005FA253 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCC01BF6E764005FA253 /* MobileCoreServices.framework */; };
 		6129DCC31BF6E770005FA253 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCC21BF6E770005FA253 /* libxml2.dylib */; };
+		614209C41BFA38BD003E0E47 /* IdeaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614209C31BFA38BD003E0E47 /* IdeaList.swift */; };
+		614209C61BFA3CCF003E0E47 /* IdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614209C51BFA3CCF003E0E47 /* IdeasClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +49,8 @@
 		6129DCC01BF6E764005FA253 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		6129DCC21BF6E770005FA253 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		6129DCC41BF6EB6A005FA253 /* my_ideas-bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "my_ideas-bridging-header.h"; sourceTree = "<group>"; };
+		614209C31BFA38BD003E0E47 /* IdeaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeaList.swift; sourceTree = "<group>"; };
+		614209C51BFA3CCF003E0E47 /* IdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeasClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 				6129DC981BF6DA6E005FA253 /* Images.xcassets */,
 				6129DC9A1BF6DA6E005FA253 /* LaunchScreen.xib */,
 				6129DC8F1BF6DA6E005FA253 /* Supporting Files */,
+				614209C31BFA38BD003E0E47 /* IdeaList.swift */,
+				614209C51BFA3CCF003E0E47 /* IdeasClient.swift */,
 			);
 			path = "My Ideas";
 			sourceTree = "<group>";
@@ -201,6 +207,8 @@
 		6129DC841BF6DA6E005FA253 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0640;
 				ORGANIZATIONNAME = "Julia Schwarz";
 				TargetAttributes = {
@@ -260,7 +268,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6129DC941BF6DA6E005FA253 /* ViewController.swift in Sources */,
+				614209C61BFA3CCF003E0E47 /* IdeasClient.swift in Sources */,
 				6129DC921BF6DA6E005FA253 /* AppDelegate.swift in Sources */,
+				614209C41BFA38BD003E0E47 /* IdeaList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,6 +482,7 @@
 				6129DCAD1BF6DA6E005FA253 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		6129DCAE1BF6DA6E005FA253 /* Build configuration list for PBXNativeTarget "My IdeasTests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +491,7 @@
 				6129DCB01BF6DA6E005FA253 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
