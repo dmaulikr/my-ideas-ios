@@ -14,9 +14,24 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitButton: UIButton!
     
+    var ideasClient = DummyIdeasClient()
+    var ideaList = IdeaList()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+
+        ideasClient.connect(onConnectError, successCallback: onConnectSuccess)
+        ideaList = ideasClient.getIdeaList()
+    }
+    
+    func onConnectError(error: NSError) {
+        
+    }
+    
+    func onConnectSuccess() {
+        ideaList = ideasClient.getIdeaList()
+        // refresh the UI
     }
 
     @IBAction func onSubmitButtonClicked(sender: AnyObject) {
@@ -36,7 +51,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        return ideaList.getCount()
     }
     
 
@@ -44,7 +59,10 @@ class ViewController: UIViewController, UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) 
         
         // Configure the cell...
-        
+        let idea = ideaList.ideaAtIndex(indexPath.row)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        cell.textLabel?.text = formatter.stringFromDate(idea.dateTime) + ": " + idea.text
         return cell
     }
     
