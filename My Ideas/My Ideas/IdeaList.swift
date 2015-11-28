@@ -26,9 +26,14 @@ class IdeaList {
         return ideas[index]
     }
     
-    // add idea
+    // add idea to end of idea list
     func addIdea(idea: Idea) {
         ideas.append(idea)
+    }
+    
+    // add idea to beginning of idea list
+    func prependIdea(idea: Idea) {
+        ideas.insert(idea, atIndex: 0)
     }
     
     // get count

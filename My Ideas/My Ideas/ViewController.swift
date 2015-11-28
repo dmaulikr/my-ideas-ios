@@ -39,6 +39,9 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
 
     @IBAction func onSubmitButtonClicked(sender: AnyObject) {
+        let newIdea = Idea(text: textView.text, dateTime: NSDate())
+        ideasClient.addIdea(newIdea, errorCallback: {(error: NSError) in }, successCallback: {})
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

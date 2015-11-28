@@ -73,7 +73,7 @@ class DummyIdeasClient : IdeasClient {
     // withErrorCallback: function to execute if method fails
     // withSuccessCallback: function to execute if method suceeds
     func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ()) {
-        ideaList.addIdea(idea)
+        ideaList.prependIdea(idea)
         successCallback()
     }
 
