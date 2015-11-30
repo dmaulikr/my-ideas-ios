@@ -14,8 +14,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitButton: UIButton!
     
-//    var ideasClient = DummyIdeasClient()
-    var ideasClient = EvernoteIdeasClient()
+    var ideasClient : IdeasClient = DummyIdeasClient()
     var ideaList = IdeaList()
     
     let TABLEVIEW_CELL_IDENTIFIER = "reuseIdentifier"
@@ -27,9 +26,8 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     override func viewDidAppear(animated: Bool) {
+        ideasClient = EvernoteIdeasClient(viewController: self)
         ideasClient.connect(onConnectError, successCallback: onConnectSuccess)
-        ideaList = ideasClient.getIdeaList()
-        tableView.reloadData()
     }
     
     func onConnectError(error: NSError) {
@@ -48,7 +46,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     func onConnectSuccess() {
         ideaList = ideasClient.getIdeaList()
-        // refresh the UI
+        tableView.reloadData()
     }
 
     @IBAction func onSubmitButtonClicked(sender: AnyObject) {

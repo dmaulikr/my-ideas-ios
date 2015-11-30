@@ -32,6 +32,7 @@
  *  This class represents the content of a note.
  */
 @interface ENNoteContent : NSObject
+@property (nonatomic, copy) NSString * emml;
 
 /**
  *  Class method to create a note content object from a plaintext string.

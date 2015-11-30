@@ -14,13 +14,13 @@
 		6129DC9C1BF6DA6E005FA253 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6129DC9A1BF6DA6E005FA253 /* LaunchScreen.xib */; };
 		6129DCA81BF6DA6E005FA253 /* My_IdeasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6129DCA71BF6DA6E005FA253 /* My_IdeasTests.swift */; };
 		6129DCB51BF6E4AD005FA253 /* evernote_key.txt in Resources */ = {isa = PBXBuildFile; fileRef = 6129DCB41BF6E4AD005FA253 /* evernote_key.txt */; };
-		6129DCBE1BF6E736005FA253 /* ENSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 6129DCBC1BF6E736005FA253 /* ENSDKResources.bundle */; };
-		6129DCBF1BF6E736005FA253 /* ENSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCBD1BF6E736005FA253 /* ENSDK.framework */; };
 		6129DCC11BF6E764005FA253 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCC01BF6E764005FA253 /* MobileCoreServices.framework */; };
 		6129DCC31BF6E770005FA253 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCC21BF6E770005FA253 /* libxml2.dylib */; };
 		614209C41BFA38BD003E0E47 /* IdeaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614209C31BFA38BD003E0E47 /* IdeaList.swift */; };
 		614209C61BFA3CCF003E0E47 /* IdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614209C51BFA3CCF003E0E47 /* IdeasClient.swift */; };
 		617310E41C0C3758005FD604 /* EvernoteIdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617310E31C0C3758005FD604 /* EvernoteIdeasClient.swift */; };
+		617310E71C0C582F005FD604 /* ENSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617310E51C0C582F005FD604 /* ENSDK.framework */; };
+		617310E81C0C582F005FD604 /* ENSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 617310E61C0C582F005FD604 /* ENSDKResources.bundle */; };
 		61F4E17E1BFDBB750063C264 /* DummyIdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F4E17D1BFDBB750063C264 /* DummyIdeasClient.swift */; };
 		61F4E1801BFDBF0B0063C264 /* dummy_idea.txt in Resources */ = {isa = PBXBuildFile; fileRef = 61F4E17F1BFDBF0B0063C264 /* dummy_idea.txt */; };
 /* End PBXBuildFile section */
@@ -47,14 +47,14 @@
 		6129DCA61BF6DA6E005FA253 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6129DCA71BF6DA6E005FA253 /* My_IdeasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = My_IdeasTests.swift; sourceTree = "<group>"; };
 		6129DCB41BF6E4AD005FA253 /* evernote_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = evernote_key.txt; sourceTree = "<group>"; };
-		6129DCBC1BF6E736005FA253 /* ENSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ENSDKResources.bundle; sourceTree = "<group>"; };
-		6129DCBD1BF6E736005FA253 /* ENSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ENSDK.framework; sourceTree = "<group>"; };
 		6129DCC01BF6E764005FA253 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		6129DCC21BF6E770005FA253 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		6129DCC41BF6EB6A005FA253 /* my_ideas-bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "my_ideas-bridging-header.h"; sourceTree = "<group>"; };
 		614209C31BFA38BD003E0E47 /* IdeaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeaList.swift; sourceTree = "<group>"; };
 		614209C51BFA3CCF003E0E47 /* IdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeasClient.swift; sourceTree = "<group>"; };
 		617310E31C0C3758005FD604 /* EvernoteIdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvernoteIdeasClient.swift; sourceTree = "<group>"; };
+		617310E51C0C582F005FD604 /* ENSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ENSDK.framework; sourceTree = "<group>"; };
+		617310E61C0C582F005FD604 /* ENSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ENSDKResources.bundle; sourceTree = "<group>"; };
 		61F4E17D1BFDBB750063C264 /* DummyIdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyIdeasClient.swift; sourceTree = "<group>"; };
 		61F4E17F1BFDBF0B0063C264 /* dummy_idea.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dummy_idea.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -64,9 +64,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				617310E71C0C582F005FD604 /* ENSDK.framework in Frameworks */,
 				6129DCC31BF6E770005FA253 /* libxml2.dylib in Frameworks */,
 				6129DCC11BF6E764005FA253 /* MobileCoreServices.framework in Frameworks */,
-				6129DCBF1BF6E736005FA253 /* ENSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,8 +166,8 @@
 		6129DCB71BF6E707005FA253 /* Evernote */ = {
 			isa = PBXGroup;
 			children = (
-				6129DCBC1BF6E736005FA253 /* ENSDKResources.bundle */,
-				6129DCBD1BF6E736005FA253 /* ENSDK.framework */,
+				617310E51C0C582F005FD604 /* ENSDK.framework */,
+				617310E61C0C582F005FD604 /* ENSDKResources.bundle */,
 			);
 			name = Evernote;
 			sourceTree = "<group>";
@@ -257,9 +257,9 @@
 				61F4E1801BFDBF0B0063C264 /* dummy_idea.txt in Resources */,
 				6129DC971BF6DA6E005FA253 /* Main.storyboard in Resources */,
 				6129DC9C1BF6DA6E005FA253 /* LaunchScreen.xib in Resources */,
+				617310E81C0C582F005FD604 /* ENSDKResources.bundle in Resources */,
 				6129DCB51BF6E4AD005FA253 /* evernote_key.txt in Resources */,
 				6129DC991BF6DA6E005FA253 /* Images.xcassets in Resources */,
-				6129DCBE1BF6E736005FA253 /* ENSDKResources.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,6 +416,8 @@
 					"/Users/julenka/devel/evernote-cloud-sdk-ios/Products",
 					"$(PROJECT_DIR)/My",
 					Ideas,
+					"$(PROJECT_DIR)/My",
+					Ideas,
 				);
 				INFOPLIST_FILE = "My Ideas/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -431,6 +433,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/julenka/devel/evernote-cloud-sdk-ios/Products",
+					"$(PROJECT_DIR)/My",
+					Ideas,
 					"$(PROJECT_DIR)/My",
 					Ideas,
 				);
