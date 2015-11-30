@@ -20,6 +20,7 @@
 		6129DCC31BF6E770005FA253 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 6129DCC21BF6E770005FA253 /* libxml2.dylib */; };
 		614209C41BFA38BD003E0E47 /* IdeaList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614209C31BFA38BD003E0E47 /* IdeaList.swift */; };
 		614209C61BFA3CCF003E0E47 /* IdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 614209C51BFA3CCF003E0E47 /* IdeasClient.swift */; };
+		617310E41C0C3758005FD604 /* EvernoteIdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 617310E31C0C3758005FD604 /* EvernoteIdeasClient.swift */; };
 		61F4E17E1BFDBB750063C264 /* DummyIdeasClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61F4E17D1BFDBB750063C264 /* DummyIdeasClient.swift */; };
 		61F4E1801BFDBF0B0063C264 /* dummy_idea.txt in Resources */ = {isa = PBXBuildFile; fileRef = 61F4E17F1BFDBF0B0063C264 /* dummy_idea.txt */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,7 @@
 		6129DCC41BF6EB6A005FA253 /* my_ideas-bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "my_ideas-bridging-header.h"; sourceTree = "<group>"; };
 		614209C31BFA38BD003E0E47 /* IdeaList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeaList.swift; sourceTree = "<group>"; };
 		614209C51BFA3CCF003E0E47 /* IdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IdeasClient.swift; sourceTree = "<group>"; };
+		617310E31C0C3758005FD604 /* EvernoteIdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvernoteIdeasClient.swift; sourceTree = "<group>"; };
 		61F4E17D1BFDBB750063C264 /* DummyIdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyIdeasClient.swift; sourceTree = "<group>"; };
 		61F4E17F1BFDBF0B0063C264 /* dummy_idea.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dummy_idea.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,6 +114,7 @@
 				614209C31BFA38BD003E0E47 /* IdeaList.swift */,
 				614209C51BFA3CCF003E0E47 /* IdeasClient.swift */,
 				61F4E17D1BFDBB750063C264 /* DummyIdeasClient.swift */,
+				617310E31C0C3758005FD604 /* EvernoteIdeasClient.swift */,
 			);
 			path = "My Ideas";
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				614209C61BFA3CCF003E0E47 /* IdeasClient.swift in Sources */,
 				6129DC921BF6DA6E005FA253 /* AppDelegate.swift in Sources */,
 				614209C41BFA38BD003E0E47 /* IdeaList.swift in Sources */,
+				617310E41C0C3758005FD604 /* EvernoteIdeasClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

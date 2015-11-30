@@ -14,23 +14,36 @@ class ViewController: UIViewController, UITableViewDataSource {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var submitButton: UIButton!
     
-    var ideasClient = DummyIdeasClient()
+//    var ideasClient = DummyIdeasClient()
+    var ideasClient = EvernoteIdeasClient()
     var ideaList = IdeaList()
     
     let TABLEVIEW_CELL_IDENTIFIER = "reuseIdentifier"
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        ideasClient.connect(onConnectError, successCallback: onConnectSuccess)
-        ideaList = ideasClient.getIdeaList()
-        
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: TABLEVIEW_CELL_IDENTIFIER)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        ideasClient.connect(onConnectError, successCallback: onConnectSuccess)
+        ideaList = ideasClient.getIdeaList()
+        tableView.reloadData()
+    }
+    
     func onConnectError(error: NSError) {
+        let alertController = UIAlertController(title: "Connect Error", message: error.domain, preferredStyle: .Alert)
         
+        let exitAction = UIAlertAction(title: "Exit", style: UIAlertActionStyle.Default) {
+            UIAlertAction in
+            exit(0)
+        }
+        
+        alertController.addAction(exitAction)
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
+
     }
     
     func onConnectSuccess() {
