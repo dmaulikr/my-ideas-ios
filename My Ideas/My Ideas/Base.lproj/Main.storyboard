@@ -19,29 +19,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C6c-Wg-jMm">
-                                <rect key="frame" x="16" y="20" width="568" height="135"/>
+                                <rect key="frame" x="16" y="20" width="568" height="73"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="135" id="xHR-Xg-OJs"/>
+                                    <constraint firstAttribute="height" constant="73" id="xHR-Xg-OJs"/>
                                 </constraints>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation </string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rHv-oj-Uhv">
-                                <rect key="frame" x="505" y="163" width="79" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="79" id="HmN-I1-Wax"/>
-                                </constraints>
-                                <state key="normal" title="Submit">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="onSubmitButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ecu-DO-Wcq"/>
-                                </connections>
-                            </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Ws1-0G-fWe">
-                                <rect key="frame" x="16" y="216" width="568" height="364"/>
+                                <rect key="frame" x="16" y="156" width="568" height="424"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <tableView key="tableFooterView" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mI6-Nn-640">
                                     <rect key="frame" x="0.0" y="0.0" width="568" height="300"/>
@@ -62,6 +50,18 @@
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="RWI-ka-F5s"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rHv-oj-Uhv">
+                                <rect key="frame" x="484" y="101" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="HmN-I1-Wax"/>
+                                </constraints>
+                                <state key="normal" title="Add My Idea">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSubmitButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ecu-DO-Wcq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -72,7 +72,7 @@
                             <constraint firstItem="Ws1-0G-fWe" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="EJM-Ee-BeW"/>
                             <constraint firstItem="C6c-Wg-jMm" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="LHo-bC-rdJ"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ws1-0G-fWe" secondAttribute="bottom" constant="20" id="PHL-cZ-YBg"/>
-                            <constraint firstItem="Ws1-0G-fWe" firstAttribute="top" secondItem="rHv-oj-Uhv" secondAttribute="bottom" constant="23" id="mCv-wr-PFl"/>
+                            <constraint firstItem="Ws1-0G-fWe" firstAttribute="top" secondItem="rHv-oj-Uhv" secondAttribute="bottom" constant="25" id="mCv-wr-PFl"/>
                             <constraint firstItem="C6c-Wg-jMm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="sIR-xt-Gcy"/>
                         </constraints>
                     </view>

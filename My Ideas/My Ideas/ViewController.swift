@@ -10,9 +10,9 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource {
 
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var submitButton: UIButton!
+    weak var textView: UITextView!
+    weak var tableView: UITableView!
+    weak var submitButton: UIButton!
     
     var ideasClient : IdeasClient = DummyIdeasClient()
     var ideaList = IdeaList()
@@ -45,7 +45,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     func onConnectSuccess() {
-        ideaList = ideasClient.getIdeaList()
+        ideaList = ideasClient.ideaList
         tableView.reloadData()
     }
 
@@ -55,10 +55,6 @@ class ViewController: UIViewController, UITableViewDataSource {
         tableView.reloadData()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
@@ -73,7 +69,7 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     func textForIdeaAtIndex(index: Int) -> String {
-        let idea = ideaList.ideaAtIndex(index)
+        let idea = ideaList[index]
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter.stringFromDate(idea.dateTime) + ": " + idea.text

@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             fileData = try String(contentsOfFile: evernoteKeyFilePath!, encoding: NSUTF8StringEncoding)
         } catch _ {
-            fileData = nil
+            fatalError("couldn't find My Ideas/evernote_key.txt")
         }
         return fileData!
     }

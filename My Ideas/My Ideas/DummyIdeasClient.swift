@@ -9,7 +9,7 @@
 import Foundation
 
 class DummyIdeasClient : IdeasClient {
-    var ideaList = IdeaList()
+    var ideaListPrivate = IdeaList()
     
     
     // Loads dummy data from Assets/dummy_ideas.txt
@@ -19,7 +19,7 @@ class DummyIdeasClient : IdeasClient {
         do {
             fileData = try String(contentsOfFile: dummyIdeaFilePath!, encoding: NSUTF8StringEncoding)
         } catch _ {
-            fileData = nil
+            fatalError("can't find dummy_idea.txt")
         }
         return fileData!
     }
@@ -40,7 +40,7 @@ class DummyIdeasClient : IdeasClient {
             let date = dateFormatter.dateFromString(parts[0])
             let ideaText = parts[1]
             
-            ideaList.addIdea(Idea(text: ideaText, dateTime: date!))
+            ideaListPrivate.addIdea(Idea(text: ideaText, dateTime: date!))
             
             
             rawDataCopy = rawDataCopy.substringWithRange(Range<String.Index>(start: (endIndex?.endIndex)!, end: rawDataCopy.endIndex))
@@ -63,8 +63,10 @@ class DummyIdeasClient : IdeasClient {
     }
     
     // Returns a list of ideas from the data source
-    func getIdeaList() -> IdeaList {
-        return ideaList
+    var ideaList : IdeaList {
+        get {
+            return ideaListPrivate;
+        }
     }
     
     // Add an idea to the data source
@@ -73,7 +75,7 @@ class DummyIdeasClient : IdeasClient {
     // withErrorCallback: function to execute if method fails
     // withSuccessCallback: function to execute if method suceeds
     func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ()) {
-        ideaList.prependIdea(idea)
+        ideaListPrivate.prependIdea(idea)
         successCallback()
     }
 

@@ -22,8 +22,13 @@ class IdeaList {
     }
     
     // get idea at index
-    func ideaAtIndex(index:Int) -> Idea {
-        return ideas[index]
+    subscript(i: Int) -> Idea {
+        get {
+            return ideas[i]
+        }
+        set {
+            ideas[i] = newValue
+        }
     }
     
     // add idea to end of idea list

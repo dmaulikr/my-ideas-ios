@@ -21,7 +21,7 @@ protocol IdeasClient {
     func connect(errorCallback: (NSError) -> (), successCallback: () -> ())
     
     // Returns a list of ideas from the data source
-    func getIdeaList() -> IdeaList
+    var ideaList : IdeaList { get }
     
     // Add an idea to the data source
     // Parameters:
