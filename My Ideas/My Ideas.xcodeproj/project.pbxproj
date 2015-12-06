@@ -46,7 +46,7 @@
 		6129DCA11BF6DA6E005FA253 /* My IdeasTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "My IdeasTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6129DCA61BF6DA6E005FA253 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6129DCA71BF6DA6E005FA253 /* My_IdeasTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = My_IdeasTests.swift; sourceTree = "<group>"; };
-		6129DCB41BF6E4AD005FA253 /* evernote_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = evernote_key.txt; sourceTree = "<group>"; };
+		6129DCB41BF6E4AD005FA253 /* evernote_key.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = evernote_key.txt; path = "My Ideas/evernote_key.txt"; sourceTree = "<group>"; };
 		6129DCC01BF6E764005FA253 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		6129DCC21BF6E770005FA253 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		6129DCC41BF6EB6A005FA253 /* my_ideas-bridging-header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "my_ideas-bridging-header.h"; sourceTree = "<group>"; };
@@ -56,7 +56,7 @@
 		617310E51C0C582F005FD604 /* ENSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ENSDK.framework; sourceTree = "<group>"; };
 		617310E61C0C582F005FD604 /* ENSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ENSDKResources.bundle; sourceTree = "<group>"; };
 		61F4E17D1BFDBB750063C264 /* DummyIdeasClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DummyIdeasClient.swift; sourceTree = "<group>"; };
-		61F4E17F1BFDBF0B0063C264 /* dummy_idea.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dummy_idea.txt; sourceTree = "<group>"; };
+		61F4E17F1BFDBF0B0063C264 /* dummy_idea.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dummy_idea.txt; path = "My Ideas/dummy_idea.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
