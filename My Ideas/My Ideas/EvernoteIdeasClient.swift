@@ -97,7 +97,7 @@ class EvernoteIdeasClient : IdeasClient {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
 
-            let newString = "<p><span>[[\(dateFormatter.stringFromDate(idea.dateTime)): \(idea.text)]]</span></p>"
+            let newString = "<p><span>[[ \(dateFormatter.stringFromDate(idea.dateTime)): \(idea.text) ]]</span></p>"
             let firstPart = ideaEmml.substringWithRange(Range<String.Index>(start: ideaEmml.startIndex, end: startIndex.startIndex))
             let lastPart = ideaEmml.substringWithRange(Range<String.Index>(start: startIndex.endIndex, end: ideaEmml.endIndex))
             return firstPart + "<en-note>" + newString + lastPart
@@ -159,8 +159,10 @@ class EvernoteIdeasClient : IdeasClient {
             dateFormatter.dateFormat = "yyyy-MM-dd"
             
             let date = dateFormatter.dateFromString(parts[0])
-            let ideaText = parts[1]
-            
+            var ideaText = parts[1]
+            for (var i = 2; i < parts.count; i++) {
+                ideaText = ideaText + ": " + parts[i]
+            }
             ideaListPrivate.addIdea(Idea(text: ideaText, dateTime: date!))
             
             

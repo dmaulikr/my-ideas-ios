@@ -19,9 +19,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
     var ideasClient : IdeasClient = DummyIdeasClient()
     var ideaList = IdeaList()
     
+    let TEXT_SIZE = CGFloat(12.0)
     let TABLEVIEW_CELL_IDENTIFIER = "reuseIdentifier"
 
     func textViewDidBeginEditing(textView: UITextView) {
+        textLabel.hidden = true
+    }
+    
+    func textViewDidChange(textView: UITextView) {
         textLabel.hidden = true
     }
     
@@ -29,6 +34,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: TABLEVIEW_CELL_IDENTIFIER)
+        
+        //Looks for single or multiple taps.
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        tableView.addGestureRecognizer(tap)
+    }
+    
+    // Calls this function when the tap is recognized.
+    func dismissKeyboard() {
+        //Causes the view (or one of its embedded text fields) to resign the first responder status.
+        textView.endEditing(true)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -74,18 +89,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
                 self.updateUI()
                 self.textLabel.text = "Type another idea"
         })
+        dismissKeyboard()
     }
     
 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
         return ideaList.getCount()
     }
     
@@ -96,6 +108,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
         return formatter.stringFromDate(idea.dateTime) + ": " + idea.text
     }
 
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(TABLEVIEW_CELL_IDENTIFIER, forIndexPath: indexPath)
         
@@ -103,7 +116,8 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
         cell.textLabel?.text = textForIdeaAtIndex(indexPath.row)
         cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
         cell.textLabel?.numberOfLines = 0;
-        cell.textLabel?.font = UIFont(name: "Helvetica", size: 14.0)
+        cell.textLabel?.font = UIFont(name: "Helvetica", size: TEXT_SIZE)
+
         if (indexPath.row % 2 == 0) {
             cell.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0)
         } else {
@@ -114,15 +128,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let cellText = textForIdeaAtIndex(indexPath.row)
-        let font = UIFont(name: "Helvetica", size: 17.0)
-        let constraintSize = CGSizeMake(tableView.bounds.width, CGFloat.max);
+        let font = UIFont(name: "Helvetica", size: TEXT_SIZE)
+        let constraintSize = CGSizeMake(tableView.bounds.width - 30, CGFloat.max);
         let attributedText = NSAttributedString(string: cellText, attributes: [
             NSFontAttributeName: font!
             ])
         let labelSize = attributedText.boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
 
         
-        return labelSize.height + 100;
+        return labelSize.height + 20;
     }
     
 }

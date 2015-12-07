@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         // Initial development is done on the sandbox service
         // When you want to connect to production, just pass "nil" for "optionalHost"
-        let SANDBOX_HOST = ENSessionHostSandbox
+//        let SANDBOX_HOST = ENSessionHostSandbox
         
         let APIKeyData = loadEvernoteAPIKey().componentsSeparatedByString("\n")
         
@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let CONSUMER_KEY = APIKeyData[0];
         let CONSUMER_SECRET = APIKeyData[1];
         
-        ENSession.setSharedSessionConsumerKey(CONSUMER_KEY, consumerSecret: CONSUMER_SECRET, optionalHost: SANDBOX_HOST)
+        ENSession.setSharedSessionConsumerKey(CONSUMER_KEY, consumerSecret: CONSUMER_SECRET, optionalHost: nil)
         return true
     }
     
