@@ -127,16 +127,18 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
         let cellText = textForIdeaAtIndex(indexPath.row)
         let font = UIFont(name: "Helvetica", size: TEXT_SIZE)
-        let constraintSize = CGSizeMake(tableView.bounds.width - 30, CGFloat.max);
+        let constraintSize = CGSizeMake(tableView.bounds.width - 30, CGFloat.max)
         let attributedText = NSAttributedString(string: cellText, attributes: [
             NSFontAttributeName: font!
             ])
         let labelSize = attributedText.boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
 
         
-        return labelSize.height + 20;
+        let result = round(labelSize.height + 20)
+        return result
     }
     
 }
