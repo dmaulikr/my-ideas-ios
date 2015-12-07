@@ -8,8 +8,10 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegate {
 
+    weak var textLabel2: UILabel!
+    weak var textLabel: UILabel!
     weak var textView: UITextView!
     weak var tableView: UITableView!
     weak var submitButton: UIButton!
@@ -19,6 +21,10 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     let TABLEVIEW_CELL_IDENTIFIER = "reuseIdentifier"
 
+    func textViewDidBeginEditing(textView: UITextView) {
+        textLabel.hidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -45,14 +51,29 @@ class ViewController: UIViewController, UITableViewDataSource {
     }
     
     func onConnectSuccess() {
+        updateUI()
+    }
+    
+    func updateUI() {
         ideaList = ideasClient.ideaList
+        textLabel2.text = "\(ideaList.getCount()) ideas in \(ideaList.getNumberOfDays()) days"
+        textLabel2.sizeToFit()
         tableView.reloadData()
     }
 
     @IBAction func onSubmitButtonClicked(sender: AnyObject) {
         let newIdea = Idea(text: textView.text, dateTime: NSDate())
-        ideasClient.addIdea(newIdea, errorCallback: {(error: NSError) in }, successCallback: {})
-        tableView.reloadData()
+        textView.text = ""
+        textLabel.text = "adding idea..."
+        textLabel.hidden = false
+        
+        ideasClient.addIdea(
+            newIdea,
+            errorCallback: {(error: NSError) in },
+            successCallback: {
+                self.updateUI()
+                self.textLabel.text = "Type another idea"
+        })
     }
     
 

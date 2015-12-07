@@ -16,30 +16,33 @@ class EvernoteIdeasClient : IdeasClient {
     var ideaListPrivate = IdeaList()
     let uiViewController : UIViewController
     
-    let beginEMMLBlock = "<en-note>"
-    let ideaEMMLFormat = "<p><span>[[%s]]</span></p>"
     let myIdeasSearch = ENNoteSearch(searchString: "intitle:'my ideas'")
 
-    var ideaNote : ENNote?
+    var ideaSearchResult : ENSessionFindNotesResult?
     
     init(viewController: UIViewController) {
         self.uiViewController = viewController
     }
+    
+    
     
     // Connect to data source
     // Parameters:
     // errorCallback: function to execute if method fails
     // successCallback: function to execute if method suceeds
     func connect(errorCallback: (NSError) -> (), successCallback: () -> ()) {
+        
         // Authenticate
         ENSession.sharedSession().authenticateWithViewController(
             uiViewController,
             preferRegistration: false)
             { error in
-                if (error != nil) {
+                if let error = error {
                     errorCallback(error)
                     return
                 }
+                
+                
                 // Find the my ideas note
                 ENSession.sharedSession().findNotesWithSearch(
                     self.myIdeasSearch, 
@@ -48,40 +51,102 @@ class EvernoteIdeasClient : IdeasClient {
                     sortOrder: ENSessionSortOrder.RecentlyUpdated,
                     maxResults: 1)
                     { results, error in
-                        if (error == nil) {
-                            if ( results.count < 1 ) {
-                                errorCallback(NSError(domain: "My Ideas note not found", code: 1, userInfo: nil))
-                                return
-                            } else {
-                                // Download the Note
-                                let result : ENSessionFindNotesResult = results[0] as! ENSessionFindNotesResult
-                                ENSession.sharedSession().downloadNote(
-                                    result.noteRef,
-                                    progress: nil)
-                                    { note, error  in
-                                        if (error == nil) {
-                                            // Parse the note
-                                            print(note.content.emml)
-                                            self.parseData(note.content.emml)
-                                            // If all that worked, call the success callback
-                                            successCallback()
-                                        } else {
-                                            errorCallback(error)
-                                            return
-                                        }
-                                    }
-                            }
-                        } else {
+                        if let error = error {
                             errorCallback(error)
                             return
                         }
+                        
+                        if ( results.count < 1 ) {
+                            errorCallback(NSError(domain: "My Ideas note not found", code: 1, userInfo: nil))
+                            return
+                        }
+
+                        // Download the Note
+                        self.ideaSearchResult = results[0] as? ENSessionFindNotesResult
+                        if let unwrappedIdeaSearchResult = self.ideaSearchResult {
+                            self.downloadAndParseMyIdeasNote(unwrappedIdeaSearchResult, errorCallback: errorCallback, successCallback: successCallback)
+                        } else {
+                            errorCallback(NSError(domain: "failed to get ideaSearchResult", code: 1, userInfo: nil))
+                        }
                     }
-            
+        }
+    }
+    
+    // Downloads the my ideas note and parses it to a list of ideas
+    func downloadAndParseMyIdeasNote(searchResult: ENSessionFindNotesResult, errorCallback: (NSError) -> (), successCallback: () -> ()) {
+        ENSession.sharedSession().downloadNote(
+            searchResult.noteRef,
+            progress: nil)
+            { note, error  in
+                if let error = error {
+                    errorCallback(error)
+                    return
+                }
+                // Parse the note
+                self.parseData(note.content.emml)
+                // If all that worked, call the success callback
+                successCallback()
+        }
+    }
+    
+
+    // Modifies the Emml
+    // If Emml is not in correct format, return nil
+    func addIdeaToEmml(ideaEmml: String, idea: Idea) -> String? {
+        if let startIndex = ideaEmml.rangeOfString( "<en-note>") {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+
+            let newString = "<p><span>[[\(dateFormatter.stringFromDate(idea.dateTime)): \(idea.text)]]</span></p>"
+            let firstPart = ideaEmml.substringWithRange(Range<String.Index>(start: ideaEmml.startIndex, end: startIndex.startIndex))
+            let lastPart = ideaEmml.substringWithRange(Range<String.Index>(start: startIndex.endIndex, end: ideaEmml.endIndex))
+            return firstPart + "<en-note>" + newString + lastPart
+        } else {
+            return  nil
+        }
+
+        
+    }
+    
+    // Add an idea to the data source
+    // Parameters:
+    // idea: the Idea to add
+    // errorCallback: function to execute if method fails
+    // successCallback: function to execute if method suceeds
+    func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ()) {
+        // get idea emml
+        if let unwrappedIdeaSearchResult = self.ideaSearchResult {
+            ENSession.sharedSession().downloadNote(
+                unwrappedIdeaSearchResult.noteRef,
+                progress: nil)
+                { note, error  in
+                    if let error = error {
+                        errorCallback(error)
+                        return
+                    }
+                    
+                    note.content.emml = self.addIdeaToEmml(note.content.emml, idea: idea)
+                    ENSession.sharedSession().uploadNote(
+                        note,
+                        policy: ENSessionUploadPolicy.Replace,
+                        toNotebook: nil,
+                        orReplaceNote: self.ideaSearchResult?.noteRef,
+                        progress: nil)
+                        { result, error in
+                            if let error = error {
+                                errorCallback(error)
+                                return
+                            }
+                            self.downloadAndParseMyIdeasNote(unwrappedIdeaSearchResult, errorCallback: errorCallback, successCallback: successCallback)
+                        }
+            }
+        } else {
+            errorCallback(NSError(domain: "Failed to add idea: My Ideas note not found", code: 1, userInfo: nil))
         }
     }
     
     func parseData(rawData: String) {
-        
+        self.ideaListPrivate = IdeaList();
         var startIndex = rawData.rangeOfString("[[")
         var endIndex = rawData.rangeOfString("]]")
         
@@ -104,22 +169,12 @@ class EvernoteIdeasClient : IdeasClient {
             endIndex = rawDataCopy.rangeOfString("]]")
             
         }
-        
     }
-
+    
     var ideaList : IdeaList {
         get {
             return ideaListPrivate;
         }
-    }
-    
-    // Add an idea to the data source
-    // Parameters:
-    // idea: the Idea to add
-    // errorCallback: function to execute if method fails
-    // successCallback: function to execute if method suceeds
-    func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ()) {
-        ideaListPrivate.addIdea(idea)
     }
     
 }

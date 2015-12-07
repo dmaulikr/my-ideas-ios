@@ -46,4 +46,23 @@ class IdeaList {
         return ideas.count
     }
     
+    func getNumberOfDays() -> Int {
+        let cal = NSCalendar.currentCalendar()
+        let unit:NSCalendarUnit = NSCalendarUnit.Day
+        
+        var firstDate = ideas[0].dateTime
+        var lastDate = ideas[0].dateTime
+        for (var i = 1; i < ideas.count; i++) {
+            let date = ideas[i].dateTime;
+            if (date.timeIntervalSince1970 > lastDate.timeIntervalSince1970) {
+                lastDate = date;
+            }
+            if (date.timeIntervalSince1970 < firstDate.timeIntervalSince1970) {
+                firstDate = date
+            }
+        }
+        let components = cal.components(unit, fromDate: firstDate, toDate: lastDate, options: NSCalendarOptions.MatchStrictly)
+        return components.day;
+
+    }
 }
