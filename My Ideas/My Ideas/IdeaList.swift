@@ -11,7 +11,7 @@
 // An idea's content and time cannot be modified after it's been created
 struct Idea {
     let text: String
-    let dateTime: NSDate
+    let dateTime: Date
 }
 
 class IdeaList {
@@ -32,13 +32,13 @@ class IdeaList {
     }
     
     // add idea to end of idea list
-    func addIdea(idea: Idea) {
+    func addIdea(_ idea: Idea) {
         ideas.append(idea)
     }
     
     // add idea to beginning of idea list
-    func prependIdea(idea: Idea) {
-        ideas.insert(idea, atIndex: 0)
+    func prependIdea(_ idea: Idea) {
+        ideas.insert(idea, at: 0)
     }
     
     // get count
@@ -47,12 +47,12 @@ class IdeaList {
     }
     
     func getNumberOfDays() -> Int {
-        let cal = NSCalendar.currentCalendar()
-        let unit:NSCalendarUnit = NSCalendarUnit.Day
+        let cal = Calendar.current
+        let unit:NSCalendar.Unit = NSCalendar.Unit.day
         
         var firstDate = ideas[0].dateTime
         var lastDate = ideas[0].dateTime
-        for (var i = 1; i < ideas.count; i++) {
+        for i in 1 ..< ideas.count {
             let date = ideas[i].dateTime;
             if (date.timeIntervalSince1970 > lastDate.timeIntervalSince1970) {
                 lastDate = date;
@@ -61,8 +61,8 @@ class IdeaList {
                 firstDate = date
             }
         }
-        let components = cal.components(unit, fromDate: firstDate, toDate: lastDate, options: NSCalendarOptions.MatchStrictly)
-        return components.day;
+        let components = (cal as NSCalendar).components(unit, from: firstDate, to: lastDate, options: NSCalendar.Options.matchStrictly)
+        return components.day!;
 
     }
 }

@@ -22,21 +22,21 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
     let TEXT_SIZE = CGFloat(12.0)
     let TABLEVIEW_CELL_IDENTIFIER = "reuseIdentifier"
 
-    func textViewDidBeginEditing(textView: UITextView) {
-        textLabel.hidden = true
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textLabel.isHidden = true
     }
     
-    func textViewDidChange(textView: UITextView) {
-        textLabel.hidden = true
+    func textViewDidChange(_ textView: UITextView) {
+        textLabel.isHidden = true
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: TABLEVIEW_CELL_IDENTIFIER)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: TABLEVIEW_CELL_IDENTIFIER)
         
         //Looks for single or multiple taps.
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.dismissKeyboard))
         tableView.addGestureRecognizer(tap)
     }
     
@@ -46,22 +46,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
         textView.endEditing(true)
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         ideasClient = EvernoteIdeasClient(viewController: self)
         ideasClient.connect(onConnectError, successCallback: onConnectSuccess)
     }
     
-    func onConnectError(error: NSError) {
-        let alertController = UIAlertController(title: "Connect Error", message: error.domain, preferredStyle: .Alert)
+    func onConnectError(_ error: NSError) {
+        let alertController = UIAlertController(title: "Connect Error", message: error.domain, preferredStyle: .alert)
         
-        let exitAction = UIAlertAction(title: "Exit", style: UIAlertActionStyle.Default) {
+        let exitAction = UIAlertAction(title: "Exit", style: UIAlertActionStyle.default) {
             UIAlertAction in
             exit(0)
         }
         
         alertController.addAction(exitAction)
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true, completion: nil)
 
     }
     
@@ -76,11 +76,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
         tableView.reloadData()
     }
 
-    @IBAction func onSubmitButtonClicked(sender: AnyObject) {
-        let newIdea = Idea(text: textView.text, dateTime: NSDate())
+    @IBAction func onSubmitButtonClicked(_ sender: AnyObject) {
+        let newIdea = Idea(text: textView.text, dateTime: Date())
         textView.text = ""
         textLabel.text = "adding idea..."
-        textLabel.hidden = false
+        textLabel.isHidden = false
         
         ideasClient.addIdea(
             newIdea,
@@ -93,28 +93,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
     }
     
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ideaList.getCount()
     }
     
-    func textForIdeaAtIndex(index: Int) -> String {
+    func textForIdeaAtIndex(_ index: Int) -> String {
         let idea = ideaList[index]
-        let formatter = NSDateFormatter()
+        let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
-        return formatter.stringFromDate(idea.dateTime) + ": " + idea.text
+        return formatter.string(from: idea.dateTime as Date) + ": " + idea.text
     }
 
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(TABLEVIEW_CELL_IDENTIFIER, forIndexPath: indexPath)
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: TABLEVIEW_CELL_IDENTIFIER, for: indexPath)
         
         // Configure the cell...
         cell.textLabel?.text = textForIdeaAtIndex(indexPath.row)
-        cell.textLabel?.lineBreakMode = NSLineBreakMode.ByWordWrapping;
+        cell.textLabel?.lineBreakMode = NSLineBreakMode.byWordWrapping;
         cell.textLabel?.numberOfLines = 0;
         cell.textLabel?.font = UIFont(name: "Helvetica", size: TEXT_SIZE)
 
@@ -126,15 +126,15 @@ class ViewController: UIViewController, UITableViewDataSource, UITextViewDelegat
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAtIndexPath indexPath: IndexPath) -> CGFloat {
 
         let cellText = textForIdeaAtIndex(indexPath.row)
         let font = UIFont(name: "Helvetica", size: TEXT_SIZE)
-        let constraintSize = CGSizeMake(tableView.bounds.width - 30, CGFloat.max)
+        let constraintSize = CGSize(width: tableView.bounds.width - 30, height: CGFloat.greatestFiniteMagnitude)
         let attributedText = NSAttributedString(string: cellText, attributes: [
             NSFontAttributeName: font!
             ])
-        let labelSize = attributedText.boundingRectWithSize(constraintSize, options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil)
+        let labelSize = attributedText.boundingRect(with: constraintSize, options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil)
 
         
         let result = round(labelSize.height + 20)

@@ -18,7 +18,7 @@ protocol IdeasClient {
     // Parameters:
     // errorCallback: function to execute if method fails
     // successCallback: function to execute if method suceeds
-    func connect(errorCallback: (NSError) -> (), successCallback: () -> ())
+    func connect(_ errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ())
     
     // Returns a list of ideas from the data source
     var ideaList : IdeaList { get }
@@ -28,6 +28,6 @@ protocol IdeasClient {
     // idea: the Idea to add
     // errorCallback: function to execute if method fails
     // successCallback: function to execute if method suceeds
-    func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ())
+    func addIdea(_ idea: Idea, errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ())
     
 }

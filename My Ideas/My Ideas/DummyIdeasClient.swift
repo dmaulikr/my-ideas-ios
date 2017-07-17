@@ -14,38 +14,38 @@ class DummyIdeasClient : IdeasClient {
     
     // Loads dummy data from Assets/dummy_ideas.txt
     func loadDummyData() -> String {
-        let dummyIdeaFilePath = NSBundle.mainBundle().pathForResource("dummy_idea", ofType: "txt")
+        let dummyIdeaFilePath = Bundle.main.path(forResource: "dummy_idea", ofType: "txt")
         let fileData: String?
         do {
-            fileData = try String(contentsOfFile: dummyIdeaFilePath!, encoding: NSUTF8StringEncoding)
+            fileData = try String(contentsOfFile: dummyIdeaFilePath!, encoding: String.Encoding.utf8)
         } catch _ {
             fatalError("can't find dummy_idea.txt")
         }
         return fileData!
     }
 
-    func parseData(rawData: String) {
+    func parseData(_ rawData: String) {
         
-        var startIndex = rawData.rangeOfString("[[")
-        var endIndex = rawData.rangeOfString("]]")
+        var startIndex = rawData.range(of: "[[")
+        var endIndex = rawData.range(of: "]]")
 
         var rawDataCopy = rawData
         while (startIndex != nil) {
 
-            let ideaStr = rawDataCopy.substringWithRange(Range<String.Index>(start: (startIndex?.endIndex)!, end: (endIndex?.startIndex)!))
-            let parts = ideaStr.componentsSeparatedByString(":")
-            let dateFormatter = NSDateFormatter()
+            let ideaStr = rawDataCopy.substring(with: ((startIndex?.upperBound)! ..< (endIndex?.lowerBound)!))
+            let parts = ideaStr.components(separatedBy: ":")
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             
-            let date = dateFormatter.dateFromString(parts[0])
+            let date = dateFormatter.date(from: parts[0])
             let ideaText = parts[1]
             
             ideaListPrivate.addIdea(Idea(text: ideaText, dateTime: date!))
             
             
-            rawDataCopy = rawDataCopy.substringWithRange(Range<String.Index>(start: (endIndex?.endIndex)!, end: rawDataCopy.endIndex))
-            startIndex = rawDataCopy.rangeOfString("[[")
-            endIndex = rawDataCopy.rangeOfString("]]")
+            rawDataCopy = rawDataCopy.substring(with: ((endIndex?.upperBound)! ..< rawDataCopy.endIndex))
+            startIndex = rawDataCopy.range(of: "[[")
+            endIndex = rawDataCopy.range(of: "]]")
             
         }
 
@@ -55,7 +55,7 @@ class DummyIdeasClient : IdeasClient {
     // Parameters:
     // errorCallback: function to execute if method fails
     // successCallback: function to execute if method suceeds
-    func connect(errorCallback: (NSError) -> (), successCallback: () -> ()) {
+    func connect(_ errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ()) {
         // parse hardcoded ideas list
         let dummyData = loadDummyData()
         parseData(dummyData)
@@ -74,7 +74,7 @@ class DummyIdeasClient : IdeasClient {
     // idea: the Idea to add
     // withErrorCallback: function to execute if method fails
     // withSuccessCallback: function to execute if method suceeds
-    func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ()) {
+    func addIdea(_ idea: Idea, errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ()) {
         ideaListPrivate.prependIdea(idea)
         successCallback()
     }

@@ -16,7 +16,7 @@ class EvernoteIdeasClient : IdeasClient {
     var ideaListPrivate = IdeaList()
     let uiViewController : UIViewController
     
-    let myIdeasSearch = ENNoteSearch(searchString: "intitle:'my ideas'")
+    let myIdeasSearch = ENNoteSearch(search: "intitle:'my ideas'")
 
     var ideaSearchResult : ENSessionFindNotesResult?
     
@@ -30,60 +30,60 @@ class EvernoteIdeasClient : IdeasClient {
     // Parameters:
     // errorCallback: function to execute if method fails
     // successCallback: function to execute if method suceeds
-    func connect(errorCallback: (NSError) -> (), successCallback: () -> ()) {
-        
+    func connect(_ errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ()) {
+    
         // Authenticate
-        ENSession.sharedSession().authenticateWithViewController(
-            uiViewController,
+        ENSession.shared().authenticate(
+            with: uiViewController,
             preferRegistration: false)
             { error in
                 if let error = error {
-                    errorCallback(error)
+                    errorCallback(error as NSError)
                     return
                 }
                 
                 
                 // Find the my ideas note
-                ENSession.sharedSession().findNotesWithSearch(
-                    self.myIdeasSearch, 
-                    inNotebook: nil,
-                    orScope: ENSessionSearchScope.Personal,
-                    sortOrder: ENSessionSortOrder.RecentlyUpdated,
+                ENSession.shared().findNotes(
+                    with: self.myIdeasSearch, 
+                    in: nil,
+                    orScope: ENSessionSearchScope.personal,
+                    sortOrder: ENSessionSortOrder.recentlyUpdated,
                     maxResults: 1)
                     { results, error in
                         if let error = error {
-                            errorCallback(error)
+                            errorCallback(error as NSError)
                             return
                         }
                         
-                        if ( results.count < 1 ) {
+                        if ( (results?.count)! < 1 ) {
                             errorCallback(NSError(domain: "My Ideas note not found", code: 1, userInfo: nil))
                             return
                         }
 
                         // Download the Note
-                        self.ideaSearchResult = results[0] as? ENSessionFindNotesResult
+                        self.ideaSearchResult = results?[0] as? ENSessionFindNotesResult
                         if let unwrappedIdeaSearchResult = self.ideaSearchResult {
                             self.downloadAndParseMyIdeasNote(unwrappedIdeaSearchResult, errorCallback: errorCallback, successCallback: successCallback)
                         } else {
                             errorCallback(NSError(domain: "failed to get ideaSearchResult", code: 1, userInfo: nil))
                         }
                     }
+            }
         }
-    }
     
     // Downloads the my ideas note and parses it to a list of ideas
-    func downloadAndParseMyIdeasNote(searchResult: ENSessionFindNotesResult, errorCallback: (NSError) -> (), successCallback: () -> ()) {
-        ENSession.sharedSession().downloadNote(
+    func downloadAndParseMyIdeasNote(_ searchResult: ENSessionFindNotesResult, errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ()) {
+        ENSession.shared().downloadNote(
             searchResult.noteRef,
             progress: nil)
             { note, error  in
                 if let error = error {
-                    errorCallback(error)
+                    errorCallback(error as NSError)
                     return
                 }
                 // Parse the note
-                self.parseData(note.content.emml)
+                self.parseData((note?.content.emml)!)
                 // If all that worked, call the success callback
                 successCallback()
         }
@@ -92,14 +92,14 @@ class EvernoteIdeasClient : IdeasClient {
 
     // Modifies the Emml
     // If Emml is not in correct format, return nil
-    func addIdeaToEmml(ideaEmml: String, idea: Idea) -> String? {
-        if let startIndex = ideaEmml.rangeOfString( "<en-note>") {
-            let dateFormatter = NSDateFormatter()
+    func addIdeaToEmml(_ ideaEmml: String, idea: Idea) -> String? {
+        if let startIndex = ideaEmml.range( of: "<en-note>") {
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
 
-            let newString = "<p><span>[[ \(dateFormatter.stringFromDate(idea.dateTime)): \(idea.text) ]]</span></p>"
-            let firstPart = ideaEmml.substringWithRange(Range<String.Index>(start: ideaEmml.startIndex, end: startIndex.startIndex))
-            let lastPart = ideaEmml.substringWithRange(Range<String.Index>(start: startIndex.endIndex, end: ideaEmml.endIndex))
+            let newString = "<p><span>[[ \(dateFormatter.string(from: idea.dateTime as Date)): \(idea.text) ]]</span></p>"
+            let firstPart = ideaEmml.substring(with: (ideaEmml.startIndex ..< startIndex.lowerBound))
+            let lastPart = ideaEmml.substring(with: (startIndex.upperBound ..< ideaEmml.endIndex))
             return firstPart + "<en-note>" + newString + lastPart
         } else {
             return  nil
@@ -113,28 +113,28 @@ class EvernoteIdeasClient : IdeasClient {
     // idea: the Idea to add
     // errorCallback: function to execute if method fails
     // successCallback: function to execute if method suceeds
-    func addIdea(idea: Idea, errorCallback: (NSError) -> (), successCallback: () -> ()) {
+    func addIdea(_ idea: Idea, errorCallback: @escaping (NSError) -> (), successCallback: @escaping () -> ()) {
         // get idea emml
         if let unwrappedIdeaSearchResult = self.ideaSearchResult {
-            ENSession.sharedSession().downloadNote(
+            ENSession.shared().downloadNote(
                 unwrappedIdeaSearchResult.noteRef,
                 progress: nil)
                 { note, error  in
                     if let error = error {
-                        errorCallback(error)
+                        errorCallback(error as NSError)
                         return
                     }
                     
-                    note.content.emml = self.addIdeaToEmml(note.content.emml, idea: idea)
-                    ENSession.sharedSession().uploadNote(
+                    note?.content.emml = self.addIdeaToEmml((note?.content.emml)!, idea: idea)
+                    ENSession.shared().uploadNote(
                         note,
-                        policy: ENSessionUploadPolicy.Replace,
-                        toNotebook: nil,
-                        orReplaceNote: self.ideaSearchResult?.noteRef,
+                        policy: ENSessionUploadPolicy.replace,
+                        to: nil,
+                        orReplace: self.ideaSearchResult?.noteRef,
                         progress: nil)
                         { result, error in
                             if let error = error {
-                                errorCallback(error)
+                                errorCallback(error as NSError)
                                 return
                             }
                             self.downloadAndParseMyIdeasNote(unwrappedIdeaSearchResult, errorCallback: errorCallback, successCallback: successCallback)
@@ -145,30 +145,30 @@ class EvernoteIdeasClient : IdeasClient {
         }
     }
     
-    func parseData(rawData: String) {
+    func parseData(_ rawData: String) {
         self.ideaListPrivate = IdeaList();
-        var startIndex = rawData.rangeOfString("[[")
-        var endIndex = rawData.rangeOfString("]]")
+        var startIndex = rawData.range(of: "[[")
+        var endIndex = rawData.range(of: "]]")
         
         var rawDataCopy = rawData
         while (startIndex != nil) {
             
-            let ideaStr = rawDataCopy.substringWithRange(Range<String.Index>(start: (startIndex?.endIndex)!, end: (endIndex?.startIndex)!))
-            let parts = ideaStr.componentsSeparatedByString(":")
-            let dateFormatter = NSDateFormatter()
+            let ideaStr = rawDataCopy.substring(with: ((startIndex?.upperBound)! ..< (endIndex?.lowerBound)!))
+            let parts = ideaStr.components(separatedBy: ":")
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             
-            let date = dateFormatter.dateFromString(parts[0])
+            let date = dateFormatter.date(from: parts[0])
             var ideaText = parts[1]
-            for (var i = 2; i < parts.count; i++) {
+            for i in 2 ..< parts.count {
                 ideaText = ideaText + ": " + parts[i]
             }
             ideaListPrivate.addIdea(Idea(text: ideaText, dateTime: date!))
             
             
-            rawDataCopy = rawDataCopy.substringWithRange(Range<String.Index>(start: (endIndex?.endIndex)!, end: rawDataCopy.endIndex))
-            startIndex = rawDataCopy.rangeOfString("[[")
-            endIndex = rawDataCopy.rangeOfString("]]")
+            rawDataCopy = rawDataCopy.substring(with: ((endIndex?.upperBound)! ..< rawDataCopy.endIndex))
+            startIndex = rawDataCopy.range(of: "[[")
+            endIndex = rawDataCopy.range(of: "]]")
             
         }
     }
